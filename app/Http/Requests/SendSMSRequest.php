@@ -15,13 +15,20 @@ class SendSMSRequest extends Request
 
     public function isValid()
     {
-        $rules =[
+        $rules = [
             'recipient'  => 'required|phone',
             'originator' => 'required',
             'message'    => 'required',
         ];
 
         $validator = new Validator($this);
+        $result = $validator->validate();
+
+        if (!$result) {
+            // return 422 response
+        }
+
+        return $result;
     }
 
 }

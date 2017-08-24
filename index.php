@@ -8,17 +8,18 @@
 
 require_once 'app/Http/Response/Response.php';
 require_once 'app/Http/Requests/Request.php';
+require_once 'app/Http/Requests/SendSMSRequest.php';
 require_once 'app/Http/Router.php';
 
 use Http\Response\Response;
-use Http\Requests\Request;
+use Http\Requests\SendSMSRequest;
 
 $validRoute = \Http\Router\Router::validate();
 
 switch ($validRoute['route']['name']) {
     case 'sms_send_v1':
 
-        $request = new Request();
+        $request = new SendSMSRequest();
 
 
         $response = new Response(200,['message' => 'hello']);

@@ -6,6 +6,8 @@
  * Time: 5:08 PM
  */
 
+namespace Errors;
+
 class Error
 {
 

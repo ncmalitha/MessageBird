@@ -8,6 +8,7 @@
 
 namespace Validation\Validator;
 
+use Errors\Error;
 
 class Validator
 {
@@ -37,23 +38,40 @@ class Validator
 
             foreach ($subrules as $subrule) {
                 if(isset($this->request->{$field})) {
-                    $this->errors[$field] = \Error::getError(1001);
+                    $this->errors[$field] = Error::getError(1001);
                 }else {
                     $validation = $this->{$subrule}($this->request->{$field});
 
                     if(!$validation['status']) {
-                        $this->errors[$field] = \Error::getError($validation['error_code']);
+                        $this->errors[$field] = Error::getError($validation['error_code']);
                     }
 
+                }
+                if($this->errors[$field]){
+                    break;
                 }
 
             }
 
         }
+        if(count($this->errors)){
+            return false;
+        }
         return true;
     }
 
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 
+    /**
+     * @param $value
+     * @return array
+     */
     private function required($value)
     {
         if ($value != '') {
@@ -65,7 +83,10 @@ class Validator
         ];
     }
 
-
+    /**
+     * @param $value
+     * @return array
+     */
     private function numeric($value)
     {
         if (is_numeric($value)) {
@@ -80,7 +101,7 @@ class Validator
     /**
      * @param $value
      * @param $length
-     * @return bool
+     * @return array
      */
     private function exactLength($value, $length)
     {
