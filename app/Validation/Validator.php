@@ -31,26 +31,50 @@ class Validator
      * @return bool
      */
     public function validate($rules){
+        foreach ($rules as $field => $rule) {
 
+            $subrules = explode('|', $rule);
+
+            foreach ($subrules as $subrule) {
+                if(isset($this->request->{$field})) {
+                    $this->errors[$field] = \Error::getError(1001);
+                }else {
+                    $validation = $this->{$subrule}($this->request->{$field});
+
+                    if(!$validation['status']) {
+                        $this->errors[$field] = \Error::getError($validation['error_code']);
+                    }
+
+                }
+
+            }
+
+        }
         return true;
     }
 
-    /**
-     * @param $value
-     * @return bool
-     */
+
     private function required($value)
     {
-        return ($value != '') ? true : false;
+        if ($value != '') {
+            return ['status' => true];
+        }
+        return [
+            'status' => false,
+            'error_code' => 1001
+        ];
     }
 
-    /**
-     * @param $value
-     * @return bool
-     */
+
     private function numeric($value)
     {
-        return is_numeric($value) ? true : false;
+        if (is_numeric($value)) {
+            return ['status' => true];
+        }
+        return [
+            'status' => false,
+            'error_code' => 1001
+        ];
     }
 
     /**
@@ -61,28 +85,34 @@ class Validator
     private function exactLength($value, $length)
     {
         //check unicode here
-        return (strlen($value) == $length) ? true : false;
+        if (strlen($value) == $length) {
+            return ['status' => true];
+        }
+        return [
+            'status' => false,
+            'error_code' => 1001
+        ];
     }
 
-    /**
-     * @param $value
-     * @param $length
-     * @return bool
-     */
-    private function min($value, $length)
-    {
-        return (strlen($value) >= $length) ? true : false;
-    }
-
-    /**
-     * @param $value
-     * @param $length
-     * @return bool
-     */
-    private function max($value, $length)
-    {
-        return (strlen($value) <= $length) ? true : false;
-    }
+//    /**
+//     * @param $value
+//     * @param $length
+//     * @return bool
+//     */
+//    private function min($value, $length)
+//    {
+//        return (strlen($value) >= $length) ? true : false;
+//    }
+//
+//    /**
+//     * @param $value
+//     * @param $length
+//     * @return bool
+//     */
+//    private function max($value, $length)
+//    {
+//        return (strlen($value) <= $length) ? true : false;
+//    }
 
 //    public function CharecterControl(input) {
 //        var str = '/[^A-Za-z0-9 \\r\\n@£$¥èéùìòÇØøÅå\u0394_\u03A6\u0393\u0027\u0022\u039B\u03A9\u03A0\u03A8\u03A3\u0398\u039EÆæßÉ!\#$%&amp;()*+,\\./\-:;&lt;=&gt;?¡ÄÖÑÜ§¿äöñüà^{}\\\\\\[~\\]|\u20AC]*/';
@@ -90,11 +120,11 @@ class Validator
 //    }
 
     public function phone($value){
-        return true;
+        return ['status' => true];
     }
 
     public function sms(){
-        return true;
+        return ['status' => true];
     }
 
 

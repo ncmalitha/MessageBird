@@ -8,6 +8,7 @@
 
 namespace Http\Requests;
 
+use Validation\Validator\Validator;
 
 class SendSMSRequest extends Request
 {
@@ -17,8 +18,10 @@ class SendSMSRequest extends Request
         $rules =[
             'recipient'  => 'required|phone',
             'originator' => 'required',
-            'message'    => 'required|phone',
+            'message'    => 'required',
         ];
+
+        $validator = new Validator($this);
     }
 
 }
