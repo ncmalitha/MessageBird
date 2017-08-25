@@ -6,7 +6,7 @@
  * Time: 6:58 PM
  */
 
-namespace Validation\Validator;
+namespace Validation;
 
 use Errors\Error;
 
@@ -65,7 +65,9 @@ class Validator
      */
     public function getErrors()
     {
-        return $this->errors;
+        return [
+            'errors' => $this->errors
+        ];
     }
 
     /**

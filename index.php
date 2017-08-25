@@ -7,6 +7,8 @@
  */
 
 require_once 'app/Http/Response/Response.php';
+require_once 'app/Errors/Error.php';
+require_once 'app/Validation/Validator.php';
 require_once 'app/Http/Requests/Request.php';
 require_once 'app/Http/Requests/SendSMSRequest.php';
 require_once 'app/Http/Router.php';
@@ -20,12 +22,11 @@ switch ($validRoute['route']['name']) {
     case 'sms_send_v1':
 
         $request = new SendSMSRequest();
+        if($request->isValid()){
 
-
-        $response = new Response(200,['message' => 'hello']);
-
-        $response->sendJSON();
-
+            $response = new Response(200,['message' => 'hello']);
+            $response->sendJSON();
+        }
 
 
         break;

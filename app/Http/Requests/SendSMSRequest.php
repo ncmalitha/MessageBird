@@ -8,7 +8,8 @@
 
 namespace Http\Requests;
 
-use Validation\Validator\Validator;
+use Http\Response\Response;
+use Validation\Validator;
 
 class SendSMSRequest extends Request
 {
@@ -22,10 +23,12 @@ class SendSMSRequest extends Request
         ];
 
         $validator = new Validator($this);
-        $result = $validator->validate();
+        $result = $validator->validate($rules);
 
         if (!$result) {
-            // return 422 response
+            $response = new Response(422, $validator->getErrors());
+
+            $response->sendJSON();
         }
 
         return $result;

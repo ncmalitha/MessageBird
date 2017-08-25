@@ -32,21 +32,11 @@ class Response
      */
     private $body;
 
-    /**
-     * Http Codes that will be used
-     * @var array
-     */
-    public static $httpCodes = [
-        200 => '200 OK',
-        400 => '400 Bad Request',
-        422 => 'Unprocessable Entity',
-        500 => '500 Internal Server Error'
-    ];
 
     public function __construct($status, $body, $headers = null)
     {
         $this->setStatus($status);
-        $this->setBody($status);
+        $this->setBody($body);
         $this->setHeaders($headers);
     }
 
@@ -75,6 +65,9 @@ class Response
         $this->body = $body;
     }
 
+    /**
+     * Sends JSON Response
+     */
     public function sendJSON()
     {
 
@@ -83,12 +76,14 @@ class Response
         header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
         header('Content-Type: application/json');
 
-        header('Status: ' . self::$httpCodes[$this->status]);
+        if($this->status == 200 || $this->status == 422) {
+            echo json_encode(array(
+                'status'  => $this->status < 300,
+                'message' => $this->body
+            ));
+        }
 
-        echo json_encode(array(
-            'status'  => $this->status < 300,
-            'message' => $this->body
-        ));
+        die();
 
     }
 }

@@ -9,6 +9,8 @@
 namespace Http\Router;
 
 
+use Http\Response\Response;
+
 class Router
 {
 
@@ -47,13 +49,14 @@ class Router
                     'route'  => $routeAvailable[0]
                 ];
             } else {
-
+                $response = new Response(405,'Method not Allowed');
+                $response->sendJSON();
             }
 
-            // return json error response method 405
         }
 
-        //return json error with 400
+        $response = new Response(400,'Bad Request');
+        $response->sendJSON();
 
     }
 
