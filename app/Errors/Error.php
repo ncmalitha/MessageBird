@@ -17,8 +17,12 @@ class Error
             'Message' => 'field is required!',
         ],
         [
-            'code'    => 2001,
+            'code'    => 1002,
             'Message' => 'field is not valid!',
+        ],
+        [
+            'code'    => 2001,
+            'Message' => 'field is not a valid phone number!',
         ],
 
     ];
