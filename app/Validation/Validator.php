@@ -31,13 +31,14 @@ class Validator
      * @param $rules
      * @return bool
      */
-    public function validate($rules){
+    public function validate($rules)
+    {
         foreach ($rules as $field => $rule) {
 
             $subrules = explode('|', $rule);
 
             foreach ($subrules as $subrule) {
-                if(isset($this->request->{$field})) {
+                if(!isset($this->request->{$field})) {
                     $this->errors[$field] = Error::getError(1001);
                 }else {
                     $validation = $this->{$subrule}($this->request->{$field});
@@ -47,7 +48,7 @@ class Validator
                     }
 
                 }
-                if($this->errors[$field]){
+                if(isset($this->errors[$field])){
                     break;
                 }
 
@@ -96,7 +97,7 @@ class Validator
         }
         return [
             'status' => false,
-            'error_code' => 1001
+            'error_code' => 1002
         ];
     }
 
@@ -113,40 +114,34 @@ class Validator
         }
         return [
             'status' => false,
-            'error_code' => 1001
+            'error_code' => 1002
         ];
     }
 
-//    /**
-//     * @param $value
-//     * @param $length
-//     * @return bool
-//     */
-//    private function min($value, $length)
-//    {
-//        return (strlen($value) >= $length) ? true : false;
-//    }
-//
-//    /**
-//     * @param $value
-//     * @param $length
-//     * @return bool
-//     */
-//    private function max($value, $length)
-//    {
-//        return (strlen($value) <= $length) ? true : false;
-//    }
+
 
 //    public function CharecterControl(input) {
 //        var str = '/[^A-Za-z0-9 \\r\\n@£$¥èéùìòÇØøÅå\u0394_\u03A6\u0393\u0027\u0022\u039B\u03A9\u03A0\u03A8\u03A3\u0398\u039EÆæßÉ!\#$%&amp;()*+,\\./\-:;&lt;=&gt;?¡ÄÖÑÜ§¿äöñüà^{}\\\\\\[~\\]|\u20AC]*/';
 //        return !new RegExp(str).test(input);
 //    }
 
-    public function phone($value){
-        return ['status' => true];
+    public function phone($value)
+    {
+        $pattern = '/^(?!(?:\d*-){5,})(?!(?:\d* ){5,})\+?[\d- ]+$/';
+        if(preg_match($pattern, $value)){
+            return ['status' => true];
+        }else{
+
+            return [
+                'status' => false,
+                'error_code' => 2001
+            ];
+        }
+
     }
 
-    public function sms(){
+    public function sms()
+    {
         return ['status' => true];
     }
 
