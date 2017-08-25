@@ -28,6 +28,8 @@ switch ($validRoute['route']['name']) {
             $messageBirdClient = new \MessageClients\MessageBird();
 
             $messageBirdClient->hasCredit();
+            $x = $messageBirdClient->sendMessage($request->recipient, $request->originator, $request->message);
+            print_r($x);
             $response = new Response(200,['message' => 'hello']);
             $response->sendJSON();
         }

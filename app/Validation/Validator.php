@@ -108,7 +108,7 @@ class Validator
      */
     private function exactLength($value, $length)
     {
-        if (mb_strlen($value) == $length) {
+        if (strlen($value) == $length) {
             return ['status' => true];
         }
         return [
@@ -123,7 +123,7 @@ class Validator
      * @return array
      */
     private function max($value,$length){
-        if (mb_strlen($value) <= $length) {
+        if (strlen($value) <= $length) {
             return ['status' => true];
         }
         return [
