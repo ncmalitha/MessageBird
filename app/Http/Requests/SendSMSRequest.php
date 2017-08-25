@@ -18,8 +18,8 @@ class SendSMSRequest extends Request
     {
         $rules = [
             'recipient'  => 'required|phone',
-            'originator' => 'required',
-            'message'    => 'required',
+            'originator' => 'required|originator',
+            'message'    => 'required|sms',
         ];
 
         $validator = new Validator($this);

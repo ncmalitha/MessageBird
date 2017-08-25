@@ -108,8 +108,7 @@ class Validator
      */
     private function exactLength($value, $length)
     {
-        //check unicode here
-        if (strlen($value) == $length) {
+        if (mb_strlen($value) == $length) {
             return ['status' => true];
         }
         return [
@@ -118,14 +117,26 @@ class Validator
         ];
     }
 
+    /**
+     * @param $value
+     * @param $length
+     * @return array
+     */
+    private function max($value,$length){
+        if (mb_strlen($value) <= $length) {
+            return ['status' => true];
+        }
+        return [
+            'status' => false,
+            'error_code' => 1003
+        ];
+    }
 
-
-//    public function CharecterControl(input) {
-//        var str = '/[^A-Za-z0-9 \\r\\n@£$¥èéùìòÇØøÅå\u0394_\u03A6\u0393\u0027\u0022\u039B\u03A9\u03A0\u03A8\u03A3\u0398\u039EÆæßÉ!\#$%&amp;()*+,\\./\-:;&lt;=&gt;?¡ÄÖÑÜ§¿äöñüà^{}\\\\\\[~\\]|\u20AC]*/';
-//        return !new RegExp(str).test(input);
-//    }
-
-    public function phone($value)
+    /**
+     * @param $value
+     * @return array
+     */
+    private function phone($value)
     {
         $pattern = '/^(?!(?:\d*-){5,})(?!(?:\d* ){5,})\+?[\d- ]+$/';
         if(preg_match($pattern, $value)){
@@ -140,9 +151,36 @@ class Validator
 
     }
 
-    public function sms()
+    /**
+     * @param $value
+     * @return array
+     */
+    private function sms($value)
     {
-        return ['status' => true];
+
+        return $this->max($value,1377);
+
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    private function originator($value){
+
+        if($this->phone($value)['status']){
+            return ['status' => true];
+        }else if(ctype_alnum($value)){
+            if($this->max($value,11)){
+                return ['status' => true];
+            }
+        }
+
+        return [
+            'status' => false,
+            'error_code' => 1002
+        ];
+
     }
 
 

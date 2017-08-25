@@ -21,9 +21,14 @@ class Error
             'Message' => 'field is not valid!',
         ],
         [
+            'code'    => 1003,
+            'Message' => 'field exeeds maximum length!',
+        ],
+        [
             'code'    => 2001,
             'Message' => 'field is not a valid phone number!',
         ],
+
 
     ];
 
