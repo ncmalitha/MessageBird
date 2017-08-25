@@ -171,7 +171,7 @@ class Validator
         if($this->phone($value)['status']){
             return ['status' => true];
         }else if(ctype_alnum($value)){
-            if($this->max($value,11)){
+            if($this->max($value,11)['status']){
                 return ['status' => true];
             }
         }
