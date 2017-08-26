@@ -26,15 +26,15 @@ switch ($validRoute['route']['name']) {
 
         $request = new SendSMSRequest();
         if($request->isValid()){
-            $messageBirdClient = new \MessageClients\MessageBird();
 
-//            $messageBirdClient->hasCredit();
-//            $x = $messageBirdClient->sendMessage($request->recipient, $request->originator, $request->message);
-//            print_r($x);
-
-            $message = new \Models\Message();
-            $message->create($request->recipient, $request->originator, $request->message);
-            $response = new Response(200,['message' => 'hello']);
+            $message   = new \Models\Message();
+            $messageId = $message->create($request->recipient, $request->originator, $request->message);
+            $response  = new Response(200, [
+                'message' => [
+                    'id' => $messageId,
+                ]
+            ]);
+            // Ideally should send  201 Response and need to have another endpoint that verifies/confirms the message delivery
             $response->sendJSON();
         }
 
