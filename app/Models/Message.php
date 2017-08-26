@@ -15,31 +15,68 @@ use DB\DB;
 class Message
 {
 
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = DB::getInstance();
+    }
+
     /**
      * Saves new message to the database in message_queue
      * @param $recipient
      * @param $originator
      * @param $message
      */
+
     public function create($recipient , $originator , $message)
     {
-
-        $db = DB::getInstance();
 
         $params = [
             'recipient'  => $recipient,
             'originator' => $originator,
             'message'    => $message
         ];
-        $db->insert('messages', $params);
+        return $this->db->insert('messages', $params);
     }
 
     /**
      * Updates number of attempts
      * @param $id
+     * @param $attempts
+     * @return mixed
      */
-    public function updateAttempts($id)
+    public function updateAttempts($id, $attempts)
     {
+
+        $setParams = [
+            'attempts'  => $attempts,
+        ];
+
+        $whereParams = [
+            'id' => $id
+        ];
+        return $this->db->update('messages', $setParams, $whereParams);
+
+    }
+
+    /**
+     * Updates status
+     * @param $id
+     * @param $status
+     * @return mixed
+     */
+    public function updateStatus($id, $status)
+    {
+
+        $setParams = [
+            'status'  => $status,
+        ];
+
+        $whereParams = [
+            'id' => $id
+        ];
+        return $this->db->update('messages', $setParams, $whereParams);
 
     }
 
@@ -48,6 +85,11 @@ class Message
      */
     public function fetchMessageFromQueue()
     {
+        $whereParams = [
+            'status'  => 'PENDING',
+        ];
+        $orderBy = 'attempts';
+        return $this->db->first('messages', $whereParams, $orderBy);
 
     }
 
