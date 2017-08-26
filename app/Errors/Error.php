@@ -32,6 +32,10 @@ class Error
 
     ];
 
+    /**
+     * @param $code
+     * @return mixed|null
+     */
     public static function getError($code)
     {
         foreach (self::$errors as $error) {
