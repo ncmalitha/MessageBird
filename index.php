@@ -13,6 +13,7 @@ require_once 'app/Http/Requests/Request.php';
 require_once 'app/Http/Requests/SendSMSRequest.php';
 require_once 'app/Http/Router.php';
 require_once 'app/MessageClients/MessageBird.php';
+require_once 'app/Models/Message.php';
 require_once 'vendor/autoload.php';
 
 use Http\Response\Response;
@@ -27,9 +28,12 @@ switch ($validRoute['route']['name']) {
         if($request->isValid()){
             $messageBirdClient = new \MessageClients\MessageBird();
 
-            $messageBirdClient->hasCredit();
-            $x = $messageBirdClient->sendMessage($request->recipient, $request->originator, $request->message);
-            print_r($x);
+//            $messageBirdClient->hasCredit();
+//            $x = $messageBirdClient->sendMessage($request->recipient, $request->originator, $request->message);
+//            print_r($x);
+
+            $message = new \Models\Message();
+            $message->create($request->recipient, $request->originator, $request->message);
             $response = new Response(200,['message' => 'hello']);
             $response->sendJSON();
         }
