@@ -158,7 +158,7 @@ class DB
             }, array_keys($where))) : "");
         $query = $this->connection->prepare($statement);
         $query->execute(array_merge($values, $where));
-        return $query->nextRowset();
+        return $query->rowCount();
     }
 
     /**
