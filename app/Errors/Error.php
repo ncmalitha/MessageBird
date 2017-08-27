@@ -14,19 +14,19 @@ class Error
     public static $errors = [
         [
             'code'    => 1001,
-            'Message' => 'field is required!',
+            'message' => 'field is required!',
         ],
         [
             'code'    => 1002,
-            'Message' => 'field is not valid!',
+            'message' => 'field is not valid!',
         ],
         [
             'code'    => 1003,
-            'Message' => 'field exeeds maximum length!',
+            'message' => 'field exeeds maximum length!',
         ],
         [
             'code'    => 2001,
-            'Message' => 'field is not a valid phone number!',
+            'message' => 'field is not a valid phone number!',
         ],
 
 
