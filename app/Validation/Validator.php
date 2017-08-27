@@ -81,7 +81,7 @@ class Validator
             return ['status' => true];
         }
         return [
-            'status' => false,
+            'status'     => false,
             'error_code' => 1001
         ];
     }
@@ -96,7 +96,7 @@ class Validator
             return ['status' => true];
         }
         return [
-            'status' => false,
+            'status'     => false,
             'error_code' => 1002
         ];
     }
@@ -112,7 +112,7 @@ class Validator
             return ['status' => true];
         }
         return [
-            'status' => false,
+            'status'     => false,
             'error_code' => 1002
         ];
     }
@@ -122,12 +122,12 @@ class Validator
      * @param $length
      * @return array
      */
-    private function max($value,$length){
+    private function max($value, $length){
         if (strlen($value) <= $length) {
             return ['status' => true];
         }
         return [
-            'status' => false,
+            'status'     => false,
             'error_code' => 1003
         ];
     }
@@ -144,7 +144,7 @@ class Validator
         }else{
 
             return [
-                'status' => false,
+                'status'     => false,
                 'error_code' => 2001
             ];
         }
@@ -158,7 +158,7 @@ class Validator
     private function sms($value)
     {
 
-        return $this->max($value,1377);
+        return $this->max($value, 1377);
 
     }
 
@@ -171,13 +171,13 @@ class Validator
         if($this->phone($value)['status']){
             return ['status' => true];
         }else if(ctype_alnum($value)){
-            if($this->max($value,11)['status']){
+            if($this->max($value, 11)['status']){
                 return ['status' => true];
             }
         }
 
         return [
-            'status' => false,
+            'status'     => false,
             'error_code' => 1002
         ];
 
