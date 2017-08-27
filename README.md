@@ -90,7 +90,7 @@ Documentation
 
 ### Send new sms
 
-* use url - v1/sms/send
+#### use url - v1/sms/send
 
 | Parameters        | Type           | Description  |
 | :------------: |:-------:| :-----------------|
