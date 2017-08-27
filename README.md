@@ -94,9 +94,9 @@ Documentation
 
 | Parameters        | Type           | Description  |
 | :------------: |:-------:| :-----------------|
-| reciepent     | String | A valid phone number *Required* |
-| originator    | String      |   The sender of the message. This can be a telephone number (including country code) or an alphanumeric string. In case of an alphanumeric string, the maximum length is 11 characters. *Required*|
-| message       | String      |    sms text with no more than 1377 characters *Required* |
+| reciepent     | String | A valid phone number. **Required** |
+| originator    | String      |   The sender of the message. This can be a telephone number (including country code) or an alphanumeric string. In case of an alphanumeric string, the maximum length is 11 characters. **Required**|
+| message       | String      |    sms text with no more than 1377 characters. **Required** |
 
 #### success response (with status code 200)
 (ideally this should give 201 with another service to get if the message was delivered)
