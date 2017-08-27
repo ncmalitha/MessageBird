@@ -31,16 +31,14 @@ while (true) {
 
                 if($response and $response->recipients->totalSentCount > 0) {
                     $message->updateStatus($queuedMessage['id'], 'DELIVERED');
-                    $message->updateAttempts($queuedMessage['id'], $queuedMessage['attempts'] + 1);
-                }else {
-                    $message->updateAttempts($queuedMessage['id'], $queuedMessage['attempts'] + 1);
                 }
             }
 
         }catch( Exception $e) {
-            $message->updateAttempts($queuedMessage['id'], $queuedMessage['attempts'] + 1);
+
         }
 
+        $message->updateAttempts($queuedMessage['id'], $queuedMessage['attempts'] + 1);
 
     }
 
