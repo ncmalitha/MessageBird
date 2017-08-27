@@ -88,4 +88,53 @@ class SendSMSRequest extends Request
 Documentation
 ----
 
+### Send new sms
+
+* use url - v1/sms/send
+
+| Parameters        | Type           | Description  |
+| :------------: |:-------:| :-----------------|
+| reciepent     | String | A valid phone number *Required* |
+| originator    | String      |   The sender of the message. This can be a telephone number (including country code) or an alphanumeric string. In case of an alphanumeric string, the maximum length is 11 characters. *Required*|
+| message       | String      |    sms text with no more than 1377 characters *Required* |
+
+#### success response (with status code 200)
+(ideally this should give 201 with another service to get if the message was delivered)
+
+```json
+{
+    "status": true,
+    "message": {
+        "status": "SUCCESS",
+        "id": "15"
+    }
+}
+
+```
+
+#### unsuccessful response (with status code 422)
+
+```json
+
+{
+    "status": false,
+    "message": {
+        "errors": {
+            "recipient": {
+                "code": 2001,
+                "message": "field is not a valid phone number!"
+            },
+            "originator": {
+                "code": 1002,
+                "message": "field is not valid!"
+            },
+            "message": {
+                "code": 1001,
+                "message": "field is required!"
+            }
+        }
+    }
+}
+
+```
 
