@@ -76,7 +76,7 @@ class Response
         header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
         header('Content-Type: application/json');
 
-        if($this->status == 200 || $this->status == 422) {
+        if(in_array($this->status ,[200, 422, 201])) {
             echo json_encode(array(
                 'status'  => $this->status < 300,
                 'message' => $this->body

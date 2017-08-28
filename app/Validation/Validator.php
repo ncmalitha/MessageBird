@@ -158,7 +158,7 @@ class Validator
     private function sms($value)
     {
 
-        return $this->max($value, 1377);
+        return $this->max($value, 1072); //1377
 
     }
 

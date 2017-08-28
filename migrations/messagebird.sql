@@ -16,18 +16,36 @@
 CREATE DATABASE IF NOT EXISTS `messagebird_app` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `messagebird_app`;
 
--- Dumping structure for table frank_dev.messages
+
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `recipient` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `originator` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `message` text COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('PENDING','DELIVERED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'PENDING',
-  `attempts` int(11) NOT NULL DEFAULT '0',
+  `status` enum('PENDING','SENT','DELIVERED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'PENDING',
+#   `attempts` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `message_queue` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `message_id` int(11) NOT NULL,
+  `recipient` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `originator` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `message` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('DEFAULT', 'CONCAT') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'DEFAULT',
+  `status` enum('PENDING', 'SENT', 'DELIVERED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'PENDING',
+  `attempts` int(11) NOT NULL DEFAULT '0',
+  `udh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `messagebird_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

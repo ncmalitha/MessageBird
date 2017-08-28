@@ -9,10 +9,13 @@
 namespace MessageClients;
 
 
+use MessageBird\Objects\Message;
+
 class MessageBird
 {
 
     private $client;
+    public $sleepTime;
 
     /**
      * MessageBird constructor.
@@ -20,7 +23,8 @@ class MessageBird
     public function __construct()
     {
         $messageBirdConfigs = include dirname(__FILE__).'/../../configs/messagebird.php';
-        $this->client = new \MessageBird\Client($messageBirdConfigs['api_key']);
+        $this->client       = new \MessageBird\Client($messageBirdConfigs['api_key']);
+        $this->sleepTime    = $messageBirdConfigs['waiting_time'];
 
     }
 
@@ -54,4 +58,28 @@ class MessageBird
         return $this->client->messages->create($message);
 
     }
+
+    /**
+     * @param $reciepent
+     * @param $originator
+     * @param $smsText
+     * @param $udh
+     * @return \MessageBird\Objects\Balance|\MessageBird\Objects\Hlr|\MessageBird\Objects\Lookup|Message|\MessageBird\Objects\Verify|\MessageBird\Objects\VoiceMessage0.
+     */
+    public function sendConcatenatedMessage($reciepent, $originator, $smsText, $udh)
+    {
+        $message             = new \MessageBird\Objects\Message();
+        $message->originator = $originator;
+        $message->recipients = array($reciepent);
+        $message->type       = 'binary';
+        $message->datacoding = 'auto';
+
+        $message->typeDetails['udh'] = $udh;
+        $message->body               = $smsText;
+
+        return $this->client->messages->create($message);
+
+
+    }
+
 }
