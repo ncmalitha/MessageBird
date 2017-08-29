@@ -29,11 +29,11 @@ switch ($validRoute['route']['name']) {
 
             $message   = new \Models\Message();
             $messageId = $message->create($request->recipient, $request->originator, $request->message);
-            $response  = new Response(200, [
+            $response  = new Response(201, [
                 'status' => 'SUCCESS',
                 'id'     => $messageId,
             ]);
-            // Ideally should send  201 Response and need to have another endpoint that verifies/confirms the message delivery
+            // Ideally solution need to have another endpoint that verifies/confirms the message delivery
             $response->sendJSON();
         }
 

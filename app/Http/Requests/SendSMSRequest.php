@@ -23,11 +23,10 @@ class SendSMSRequest extends Request
         ];
 
         $validator = new Validator($this);
-        $result = $validator->validate($rules);
+        $result    = $validator->validate($rules);
 
         if (!$result) {
             $response = new Response(422, $validator->getErrors());
-
             $response->sendJSON();
         }
 
