@@ -21,7 +21,6 @@ while (true) {
     $queuedMessage     = $message->fetchMessageFromQueue();
     $messageBirdClient = new \MessageClients\MessageBird();
 
-print_r($queuedMessage);
     if($queuedMessage) {
 
         try {
@@ -34,7 +33,6 @@ print_r($queuedMessage);
                 else {
                     $response = $messageBirdClient->sendConcatenatedMessage($queuedMessage['recipient'], $queuedMessage['originator'],
                         $queuedMessage['message'], $queuedMessage['udh']);
-                    print_r($response);
                 }
 
 

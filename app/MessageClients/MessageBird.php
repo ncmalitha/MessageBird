@@ -8,8 +8,10 @@
 
 namespace MessageClients;
 
+require_once dirname(__FILE__) .'/../Utils/Utils.php';
 
 use MessageBird\Objects\Message;
+use Utils\Utils;
 
 class MessageBird
 {
@@ -75,7 +77,7 @@ class MessageBird
         $message->datacoding = 'auto';
 
         $message->typeDetails['udh'] = $udh;
-        $message->body               = $smsText;
+        $message->body               = Utils::convertToHex($smsText);
 
         return $this->client->messages->create($message);
 
