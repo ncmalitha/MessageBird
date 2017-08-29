@@ -5,7 +5,7 @@ Since I was specifically asked not to use not any frameworks I have created my o
 
 Installation
 -----
-* Go to migrations folder and use the sql script to create messages table
+* Go to migrations folder and use the sql script to create messages and queue table
 * Go to daemons folder and type the following in the terminal to run the MessageDispatcher in the background
 
 ```bash
