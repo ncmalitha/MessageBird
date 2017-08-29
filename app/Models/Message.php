@@ -15,6 +15,7 @@ require_once 'QueueableMessage.php';
 class Message extends Model
 {
 
+    protected $table = 'messages';
 
     /**
      * Saves new message to the database in message_queue
@@ -31,7 +32,7 @@ class Message extends Model
             'originator' => $originator,
             'message'    => $message
         ];
-        $messageId = $this->db->insert('messages', $params);
+        $messageId = $this->db->insert($this->table, $params);
 
         $queuableMessage = new QueueableMessage();
 
@@ -71,7 +72,7 @@ class Message extends Model
         $whereParams = [
             'id' => $id
         ];
-        return $this->db->update('messages', $setParams, $whereParams);
+        return $this->db->update($this->table, $setParams, $whereParams);
 
     }
 

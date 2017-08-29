@@ -13,6 +13,8 @@ require_once 'Model.php';
 class QueueableMessage extends Model
 {
 
+    protected $table = 'message_queue';
+
     /**Saves new message to the database in message_queue
      * @param $recipient
      * @param $originator
@@ -33,7 +35,7 @@ class QueueableMessage extends Model
             'type'       => $type,
             'udh'        => $udh,
         ];
-        return $this->db->insert('message_queue', $params);
+        return $this->db->insert($this->table, $params);
     }
 
     /**
@@ -52,7 +54,7 @@ class QueueableMessage extends Model
         $whereParams = [
             'id' => $id
         ];
-        return $this->db->update('message_queue', $setParams, $whereParams);
+        return $this->db->update($this->table, $setParams, $whereParams);
 
     }
 
@@ -76,7 +78,7 @@ class QueueableMessage extends Model
         $whereParams = [
             'id' => $id
         ];
-        return $this->db->update('message_queue', $setParams, $whereParams);
+        return $this->db->update($this->table, $setParams, $whereParams);
 
     }
 
@@ -89,7 +91,7 @@ class QueueableMessage extends Model
             'status'  => 'PENDING',
         ];
         $orderBy = 'attempts';
-        return $this->db->first('message_queue', $whereParams, $orderBy);
+        return $this->db->first($this->table, $whereParams, $orderBy);
 
     }
 }
