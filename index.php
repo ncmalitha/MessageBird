@@ -34,14 +34,6 @@ switch ($validRoute['route']['name']) {
                 'id'     => $messageId,
             ]);
             // Ideally solution need to have another endpoint that verifies/confirms the message delivery
-
-//            $messageBirdClient = new MessageClients\MessageBird();
-//
-//            $result = $messageBirdClient->getConcatenatedMessage($request->message);
-//            print_r($result);
-////            $result = $messageBirdClient->sendConcatenatedMessage($request->recipient, $request->originator, $request->message);
-////            print_r($result);
-//            exit;
             $response->sendJSON();
         }
 
